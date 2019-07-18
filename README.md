@@ -162,3 +162,5 @@ gridExtra::grid.arrange(p1, p2, ncol = 2)
 ``` 
 
 ![alt text](https://github.com/vanhungtran/geo_epidemiology/blob/master/Rplot02.png)
+
+- Daily Graph Series Nguyen Chi Dung
