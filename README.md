@@ -161,6 +161,131 @@ ggplot() +
 gridExtra::grid.arrange(p1, p2, ncol = 2)
 ``` 
 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+#####################################################################################################################################
+
+``` r
+
+#https://egallic.fr/en/european-map-using-r/
+
+#install.packages(c("grid","rworldmap"))
+
+library(ggplot2)
+library(grid)
+library(rworldmap)
+
+
+# download from https://ourworldindata.org/cancer
+
+mydf_cancer <- read.csv("C:/Users/vht/OneDrive/book/share-of-population-with-cancer.csv")
+mydf_cancer <- mydf_cancer[,c(1,3,4)]
+colnames(mydf_cancer) <- c("Country","Year","Prevalence")
+
+
+mydf <- mydf_cancer  %>% filter(Year==2017)
+data(countryExData)
+
+mydf1 <- merge(countryExData, mydf, by = "Country")
+
+
+worldMap <- getMap()
+
+# Member States of the European Union
+
+ASEANp <- mydf1$Country
+                 
+# Select only the index of states member of the E.U.
+inASEANp <- which(worldMap$NAME%in%ASEANp)
+
+#ASEANp <- which()
+
+# Extract longitude and latitude border's coordinates of members states of E.U. 
+ASEANpCoords <- lapply(inASEANp, function(i){
+  df <- data.frame(worldMap@polygons[[i]]@Polygons[[1]]@coords)
+  df$region =as.character(worldMap$NAME[i])
+  colnames(df) <- list("long", "lat", "region")
+  return(df)
+})
+
+ASEANpCoords <- do.call("rbind", ASEANpCoords)
+
+
+
+
+
+
+# Add some data for each member
+#value <- sample(x = seq(0,3,by = 0.1), size = length(ASEANp), replace = TRUE)
+
+value <- mydf1$Prevalence
+ASEANpTable <- data.frame(country = ASEANp, value = value)
+ASEANpCoords$value <- ASEANpTable$value[match(ASEANpCoords$region,ASEANpTable$country)]
+
+
+
+
+
+# Plot the map
+P <- ggplot() + geom_polygon(data = ASEANpCoords, aes(x = long, y = lat, group = region, fill = value),
+                             colour = "black", size = 0.1)  +
+  coord_map(xlim = c(-180, 180),  ylim = c(-60, 90))
+
+P <- P + scale_fill_gradient(name = "Prevalence of reported cancer", low = "green", high = "red", na.value = "grey50")
+
+
+P <- P + theme(#panel.grid.minor = element_line(colour = NA), panel.grid.minor = element_line(colour = NA),
+  #panel.background = element_rect(fill = NA, colour = NA),
+  axis.text.x = element_blank(),
+  axis.text.y = element_blank(), axis.ticks.x = element_blank(),
+  axis.ticks.y = element_blank(), axis.title = element_blank(),
+  #rect = element_blank(),
+  plot.margin = unit(0 * c(-1.5, -1.5, -1.5, -1.5), "lines"))
+
+
+
+P
+
+
+#################################################################################################################
+
+data(countryExData) 
+mapDevice() #create world map shaped window 
+mapByRegion(countryExData ,nameDataColumn="CLIMATE" ,joinCode="ISO3" ,nameJoinColumn="ISO3V10" ,regionType="Stern" ,FUN="mean") 
+
+``` 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ![alt text](https://github.com/vanhungtran/geo_epidemiology/blob/master/Rplot02.png)
 
 - Daily Graph Series Nguyen Chi Dung
