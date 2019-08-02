@@ -159,9 +159,16 @@ ggplot() +
 
 
 gridExtra::grid.arrange(p1, p2, ncol = 2)
+
+
+
+
+
+- Daily Graph Series Nguyen Chi Dung
+
 ``` 
 
-
+![alt text](https://github.com/vanhungtran/geo_epidemiology/blob/master/Rplot02.png)
 
 
 
@@ -180,7 +187,7 @@ gridExtra::grid.arrange(p1, p2, ncol = 2)
 
 ``` r
 
-#https://egallic.fr/en/european-map-using-r/
+
 
 #install.packages(c("grid","rworldmap"))
 
@@ -208,7 +215,7 @@ worldMap <- getMap()
 
 ASEANp <- mydf1$Country
                  
-# Select only the index of states member of the E.U.
+# Select the index of states 
 inASEANp <- which(worldMap$NAME%in%ASEANp)
 
 #ASEANp <- which()
@@ -228,7 +235,7 @@ ASEANpCoords <- do.call("rbind", ASEANpCoords)
 
 
 
-# Add some data for each member
+# Prevalence
 #value <- sample(x = seq(0,3,by = 0.1), size = length(ASEANp), replace = TRUE)
 
 value <- mydf1$Prevalence
@@ -284,8 +291,3 @@ mapByRegion(countryExData ,nameDataColumn="CLIMATE" ,joinCode="ISO3" ,nameJoinCo
 
 
 
-
-
-![alt text](https://github.com/vanhungtran/geo_epidemiology/blob/master/Rplot02.png)
-
-- Daily Graph Series Nguyen Chi Dung
