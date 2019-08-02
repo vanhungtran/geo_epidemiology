@@ -183,7 +183,7 @@ gridExtra::grid.arrange(p1, p2, ncol = 2)
 
 
 
-#####################################################################################################################################
+## Cancer prevelence
 
 ``` r
 
@@ -265,10 +265,14 @@ P <- P + theme(#panel.grid.minor = element_line(colour = NA), panel.grid.minor =
 
 
 P
+``` 
+
+![alt text](https://github.com/vanhungtran/geo_epidemiology/blob/master/map_cancer_inci.png)
 
 
-#################################################################################################################
 
+## Other maps
+``` r
 data(countryExData) 
 mapDevice() #create world map shaped window 
 mapByRegion(countryExData ,nameDataColumn="CLIMATE" ,joinCode="ISO3" ,nameJoinColumn="ISO3V10" ,regionType="Stern" ,FUN="mean") 
@@ -276,7 +280,7 @@ mapByRegion(countryExData ,nameDataColumn="CLIMATE" ,joinCode="ISO3" ,nameJoinCo
 ``` 
 
 
-
+![alt text](https://github.com/vanhungtran/geo_epidemiology/blob/master/climate.emf)
 
 
 
